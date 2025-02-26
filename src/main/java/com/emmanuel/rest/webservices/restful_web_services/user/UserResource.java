@@ -51,7 +51,6 @@ public class UserResource {
         if(user == null) {
             throw new UserNotFoundException("id-" + id); // This throws a UserNotFoundException with the message "id-" + id
         }
-
         return user;
         //url = http://localhost:8080/users/1
     }
