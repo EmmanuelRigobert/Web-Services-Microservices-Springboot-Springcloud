@@ -12,7 +12,7 @@ public class HelloWorldBean {
         this.message = message;
     }
     @Override // This annotation is used to override the toString() method
-    public String toString() { // This is called when the object is printed
+    public String toString() { // This is called when the object is printed.
         return String.format("HelloWorldBean [message=%s]", message); // This method returns the formatted string
     }
 
