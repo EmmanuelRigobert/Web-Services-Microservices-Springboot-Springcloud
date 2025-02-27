@@ -19,6 +19,8 @@ package com.emmanuel.rest.webservices.restful_web_services.user;
     Retrieve details of a post - GET /users/{id}/posts/{post_id}
  */
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,15 +45,29 @@ public class UserResource {
     //url = http://localhost:8080/users
     }
     //Get /users/{id}
+
+    //HATEOAS - Hypermedia As The Engine Of Application State -With HATEOAS, a client interacts with a network application whose application servers provide information dynamically through hypermedia. A REST client needs little to no prior knowledge about how to interact with an application or server beyond a generic understanding of hypermedia.
+    // With HATEOAS, the provider includes hypermedia links in the response that are used by the client to navigate the API. This allows the client to discover the API and interact with it without hardcoding URLs. e.g by providing links to all /users API from user/{id} API, the client can navigate the to the API without knowing the URL structure of /users.
+    //Implementation options:
+    //1. Custom implementation - You can manually create links in the response
+    //2. Use Standard - HAL, Spring HATEOAS, JSON-LD, Siren, Collection+JSON, etc
+    //HAL - Hypertext Application Language - A simple format that gives a consistent and easy way to hyperlink between resources in your API. It is a set of conventions for expressing hyperlinks in either JSON or XML.
+    //Spring HATEOAS - A library of APIs that you can use to easily create REST representations that follow the HATEOAS principle when working with Spring and especially Spring MVC. It builds on the core JSON/XML support in Spring.
+
     @GetMapping("/users/{id}") // This annotation is used to map HTTP GET requests onto specific handler methods
-    public User retrieveUser(@PathVariable int id) { // PathVariable is used to bind the id value from the URL to the id parameter of the method
+    public EntityModel<User> retrieveUser(@PathVariable int id) { // PathVariable is used to bind the id value from the URL to the id parameter of the method
         User user = service.findOne(id); // This calls the findOne() method from the UserDaoService class
 
         //Response in case of user not found is not handled. Throws 200 status code instead of 404
         if(user == null) {
             throw new UserNotFoundException("id-" + id); // This throws a UserNotFoundException with the message "id-" + id
         }
-        return user;
+        EntityModel<User> entityModel = EntityModel.of(user); // This creates an EntityModel of the user - hateoas
+
+        //This creates a dynamic link to the retrieveAllUsers() method
+        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).retrieveAllUsers()); // This creates a link to the retrieveAllUsers() method
+        entityModel.add(linkTo.withRel("all-users")); // This adds the link to the entityModel with the relation "all-users"
+        return entityModel;
         //url = http://localhost:8080/users/1
     }
 
