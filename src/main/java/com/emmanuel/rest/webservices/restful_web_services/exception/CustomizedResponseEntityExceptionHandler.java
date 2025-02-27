@@ -1,5 +1,6 @@
 package com.emmanuel.rest.webservices.restful_web_services.exception;
 //In this class, we are creating a custom error response for the Restful Web Services application
+import com.emmanuel.rest.webservices.restful_web_services.user.PostNotFoundException;
 import com.emmanuel.rest.webservices.restful_web_services.user.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(UserNotFoundException.class)
     //This annotation is used to handle exceptions of type UserNotFoundException
     public final ResponseEntity<ErrorDetails> handleUserNotFoundException(Exception ex, WebRequest request) throws Exception { //This is the method from the parent class that we we want to override.
+        //This creates a new ErrorDetails object with the current date, the exception message and the request description. Our custom error response
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND); //This returns a response entity with the error details and a 500 status code
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    //This annotation is used to handle exceptions of type UserNotFoundException
+    public final ResponseEntity<ErrorDetails> handlePostNotFoundException(Exception ex, WebRequest request) throws Exception { //This is the method from the parent class that we we want to override.
         //This creates a new ErrorDetails object with the current date, the exception message and the request description. Our custom error response
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND); //This returns a response entity with the error details and a 500 status code
