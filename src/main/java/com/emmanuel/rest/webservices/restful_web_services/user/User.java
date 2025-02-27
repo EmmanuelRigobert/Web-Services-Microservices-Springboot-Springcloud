@@ -2,12 +2,24 @@ package com.emmanuel.rest.webservices.restful_web_services.user;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
+import javax.annotation.processing.Generated;
 import java.time.LocalDate;
 
+@Entity(name = "user_details")//This annotation is used to create a table in the database. The name attribute is used to specify the table name to be user_details in the database because user is a reserved keyword in database
 public class User {
+
+    protected User() {
+        //This constructor is used to create a new User object which is required by JPA
+    }
+
+    @Id//This annotation is used to specify the primary key of the table
+    @GeneratedValue//This annotation is used to specify the generation strategy of the primary key
     private Integer id;
 
     //Customizing REST API Response
@@ -15,11 +27,11 @@ public class User {
     //2. Using @JsonFilter annotation to filter out fields in the response e.g password field. This is done by static or dynamic filtering. Static filtering is done at the class level while dynamic filtering is done at the method level.
 
     @Size(min=2, message="Name should have at least 2 characters")
-    @JsonProperty("user_name") //This annotation is used to customize the field name in the response
+    //@JsonProperty("user_name") //This annotation is used to customize the field name in the response
     private String name;
 
     @Past(message="Birth date should be in the past")
-    @JsonProperty("user_birth_date") //This annotation is used to customize the field name in the response
+   // @JsonProperty("user_birth_date") //This annotation is used to customize the field name in the response
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
