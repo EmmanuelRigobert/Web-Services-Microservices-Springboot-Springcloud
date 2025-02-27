@@ -9,6 +9,7 @@ public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {
         // This constructor is used to create a new UserNotFoundException object with a message
         //How is the error  being generated?
+        //The UserNotFoundException class extends the RuntimeException class which is used to create a custom exception
 
         super(message);
     }
