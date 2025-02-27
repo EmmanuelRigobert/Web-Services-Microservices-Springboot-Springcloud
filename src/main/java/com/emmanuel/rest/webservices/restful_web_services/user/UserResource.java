@@ -14,9 +14,6 @@ package com.emmanuel.rest.webservices.restful_web_services.user;
     Create a user - POST /users
     Retrieve one user - GET /users/{id}
     Delete a user - DELETE /users/{id}
-    Retrieve all posts for a User - GET /users/{id}/posts
-    Create a post for a User - POST /users/{id}/posts
-    Retrieve details of a post - GET /users/{id}/posts/{post_id}
  */
 
 import org.springframework.hateoas.EntityModel;
