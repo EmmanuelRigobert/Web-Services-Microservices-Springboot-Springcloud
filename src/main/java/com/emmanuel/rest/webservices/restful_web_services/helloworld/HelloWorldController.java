@@ -53,7 +53,7 @@ public class HelloWorldController {
     public String helloWorldInternationalized() {// This method will return a message in different languages
         //A locale is a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface
         Locale locale = LocaleContextHolder.getLocale(); // This gets the locale from the request header eg Accept-Language: nl and passes it to the locale variable
-        return messageSource.getMessage("good.morning.message", null, "Default Message", locale);// This uses the messageSource to get the message from the properties file and returns it with respect to the request header
+        return messageSource.getMessage("good.morning.message", null, "Default Message", locale);// This uses the messageSource to get the message from the properties file (resources.Resource Bundle 'message'.message.properties) and returns it with respect to the request header
         //url = http://localhost:8080/hello-world-internationalized
     }
 
