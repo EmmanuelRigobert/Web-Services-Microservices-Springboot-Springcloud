@@ -43,6 +43,13 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<!-- Used for security. This generates a password in terminal when the application is ran, which we then use to login before make API calls. Alternatively, we can configure the username and password in the application.properties file
+			Add Authorization: User-> user, Password-> {494af6d3-ffd7-4b31-a130-9495674bab7a}-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId> <!-- Used for monitoring : http://localhost:8080/actuator. Actuator exposes only health by default.
 			Configure all features in applications.properties.
 			<...beans> to see all methods
@@ -85,12 +92,17 @@
 			<optional>true</optional>
 			<!-- Provides fast application restarts, LiveReload, and configurations for enhanced development experience -->
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId> <!-- H2 Database. url: http://localhost:8080/h2-console -->
+			<artifactId>h2</artifactId> <!- H2 Database. url: http://localhost:8080/h2-console ->
 			<scope>runtime</scope>
-			<!-- H2 Database -->
+		</dependency-->
+
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
